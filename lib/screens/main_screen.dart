@@ -24,65 +24,194 @@ class _MainScreenState extends State<MainScreen> {
     const ConfiguracoesScreen(),
   ];
 
+  final List<String> _screenTitles = [
+    'Dashboard',
+    'Entradas',
+    'Saídas',
+    'Relatórios',
+    'Cadastros',
+    'Configurações',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF0F0F0F),
       body: Row(
         children: [
-          // Sidebar
-          NavigationRail(
-            minWidth: 80,
-            extended: true,
-            backgroundColor: const Color(0xFF121212),
-            selectedIndex: _selectedIndex,
-            onDestinationSelected: (index) {
-              setState(() {
-                _selectedIndex = index;
-              });
-            },
-            labelType: NavigationRailLabelType.none,
-            destinations: const [
-              NavigationRailDestination(
-                icon: Icon(Icons.dashboard),
-                selectedIcon: Icon(Icons.dashboard, color: Colors.blue),
-                label: Text('Dashboard'),
+          // Sidebar melhorada
+          Container(
+            width: 280,
+            decoration: BoxDecoration(
+              color: const Color(0xFF1A1A1A),
+              border: Border(
+                right: BorderSide(color: Colors.grey[800]!, width: 1),
               ),
-              NavigationRailDestination(
-                icon: Icon(Icons.arrow_downward),
-                selectedIcon: Icon(Icons.arrow_downward, color: Colors.green),
-                label: Text('Entradas'),
-              ),
-              NavigationRailDestination(
-                icon: Icon(Icons.arrow_upward),
-                selectedIcon: Icon(Icons.arrow_upward, color: Colors.red),
-                label: Text('Saídas'),
-              ),
-              NavigationRailDestination(
-                icon: Icon(Icons.bar_chart),
-                selectedIcon: Icon(Icons.bar_chart, color: Colors.amber),
-                label: Text('Relatórios'),
-              ),
-              NavigationRailDestination(
-                icon: Icon(Icons.app_registration),
-                selectedIcon: Icon(Icons.app_registration, color: Colors.blue),
-                label: Text('Cadastros'),
-              ),
-              NavigationRailDestination(
-                icon: Icon(Icons.settings),
-                selectedIcon: Icon(Icons.settings, color: Colors.grey),
-                label: Text('Configurações'),
-              ),
-            ],
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.3),
+                  blurRadius: 10,
+                  offset: const Offset(2, 0),
+                ),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Logo e título na sidebar
+                Container(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Logo maior
+                      Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          //color: const Color(0xFF2A2A2A),
+                          borderRadius: BorderRadius.circular(12),
+                          // border: Border.all(
+                          //   color: Colors.blue.withValues(alpha: 0.3),
+                          //   width: 1,
+                          // ),
+                        ),
+                        child: Image.asset(
+                          'assets/logo.png',
+                          height: 128,
+                          width: 128,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      const Text(
+                        'Compasso Fiscal',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'Gestão Financeira',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey[400],
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Divider
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 24),
+                  height: 1,
+                  color: Colors.grey[800],
+                ),
+
+                const SizedBox(height: 24),
+
+                // Menu de navegação
+                Expanded(
+                  child: ListView(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    children: [
+                      _buildNavItem(
+                        0,
+                        Icons.dashboard,
+                        'Dashboard',
+                        Colors.blue,
+                      ),
+                      _buildNavItem(
+                        1,
+                        Icons.trending_up,
+                        'Entradas',
+                        Colors.green,
+                      ),
+                      _buildNavItem(
+                        2,
+                        Icons.trending_down,
+                        'Saídas',
+                        Colors.red,
+                      ),
+                      _buildNavItem(
+                        3,
+                        Icons.analytics,
+                        'Relatórios',
+                        Colors.amber,
+                      ),
+                      _buildNavItem(
+                        4,
+                        Icons.people,
+                        'Cadastros',
+                        Colors.purple,
+                      ),
+                      _buildNavItem(
+                        5,
+                        Icons.settings,
+                        'Configurações',
+                        Colors.grey,
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Informações do usuário na parte inferior
+                Container(
+                  margin: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF2A2A2A),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.grey[800]!, width: 1),
+                  ),
+                  child: const Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 20,
+                        backgroundImage: AssetImage('assets/user.png'),
+                      ),
+                      SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Mestre Financeiro',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 14,
+                              ),
+                            ),
+                            Text(
+                              'Administrador',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
+
           // Conteúdo principal
           Expanded(
             child: Column(
               children: [
-                // AppBar
+                // AppBar simplificada
                 Container(
                   height: 70,
                   decoration: BoxDecoration(
-                    color: const Color(0xFF121212),
+                    color: const Color(0xFF1A1A1A),
                     border: Border(
                       bottom: BorderSide(color: Colors.grey[800]!, width: 1),
                     ),
@@ -91,40 +220,152 @@ class _MainScreenState extends State<MainScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      // Título da tela atual
                       Row(
                         children: [
-                          Image.asset('assets/logo.png', height: 40),
-                          const SizedBox(width: 16),
-                          const Text(
-                            'Compasso Fiscal',
-                            style: TextStyle(
+                          Text(
+                            _screenTitles[_selectedIndex],
+                            style: const TextStyle(
                               fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
                             ),
                           ),
+                          // const SizedBox(width: 12),
+                          // Container(
+                          //   padding: const EdgeInsets.symmetric(
+                          //     horizontal: 8,
+                          //     vertical: 4,
+                          //   ),
+                          //   decoration: BoxDecoration(
+                          //     color: Colors.blue..withValues(alpha: 0.2),
+                          //     borderRadius: BorderRadius.circular(6),
+                          //   ),
+                          //   child: Text(
+                          //     'Ativo',
+                          //     style: TextStyle(
+                          //       color: Colors.blue[300],
+                          //       fontSize: 12,
+                          //       fontWeight: FontWeight.w500,
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
-                      const Row(
+
+                      // Ações do header
+                      Row(
                         children: [
-                          Icon(Icons.notifications, size: 24),
-                          SizedBox(width: 16),
-                          CircleAvatar(
-                            radius: 16,
-                            backgroundImage: AssetImage('assets/user.png'),
+                          IconButton(
+                            icon: const Icon(Icons.search),
+                            onPressed: () {},
+                            color: Colors.grey[400],
                           ),
-                          SizedBox(width: 8),
-                          Text('Mestre Financeiro'),
+                          const SizedBox(width: 8),
+                          Stack(
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.notifications_outlined),
+                                onPressed: () {},
+                                color: Colors.grey[400],
+                              ),
+                              Positioned(
+                                right: 8,
+                                top: 8,
+                                child: Container(
+                                  width: 8,
+                                  height: 8,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.red,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(width: 16),
+                          IconButton(
+                            icon: const Icon(Icons.fullscreen),
+                            onPressed: () {},
+                            color: Colors.grey[400],
+                          ),
                         ],
                       ),
                     ],
                   ),
                 ),
+
                 // Conteúdo da tela
-                Expanded(child: _screens[_selectedIndex]),
+                Expanded(
+                  child: Container(
+                    color: const Color(0xFF0F0F0F),
+                    child: _screens[_selectedIndex],
+                  ),
+                ),
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildNavItem(int index, IconData icon, String label, Color color) {
+    final bool isSelected = _selectedIndex == index;
+
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap: () {
+            setState(() {
+              _selectedIndex = index;
+            });
+          },
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            decoration: BoxDecoration(
+              color: isSelected
+                  ? color.withValues(alpha: 0.15)
+                  : Colors.transparent,
+              borderRadius: BorderRadius.circular(12),
+              border: isSelected
+                  ? Border.all(color: color.withValues(alpha: 0.2), width: 1)
+                  : null,
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  icon,
+                  color: isSelected ? color : Colors.grey[400],
+                  size: 20,
+                ),
+                const SizedBox(width: 12),
+                Text(
+                  label,
+                  style: TextStyle(
+                    color: isSelected ? Colors.white : Colors.grey[400],
+                    fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+                    fontSize: 14,
+                  ),
+                ),
+                const Spacer(),
+                if (isSelected)
+                  Container(
+                    width: 4,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: color,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
