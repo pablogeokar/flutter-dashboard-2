@@ -75,6 +75,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  intl:
+    dependency: transitive
+    description:
+      name: intl
+      sha256: "3df61194eb431efc39c4ceba583b95633a403f46c9fd341e550ce0bfa50e9aa5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.20.2"
   leak_tracker:
     dependency: transitive
     description:
@@ -176,6 +184,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.1"
+  syncfusion_flutter_charts:
+    dependency: "direct main"
+    description:
+      name: syncfusion_flutter_charts
+      sha256: "7bb73285abf3601f47b4bb8af68ba34bf7a0c0bec011806549f199ff3d94463d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "30.1.39"
+  syncfusion_flutter_core:
+    dependency: transitive
+    description:
+      name: syncfusion_flutter_core
+      sha256: df52b3d5c9c593c2954a7e776f6c7a8776a583819832ee32fb16697bb1bfbc27
+      url: "https://pub.dev"
+    source: hosted
+    version: "30.1.39"
   term_glyph:
     dependency: transitive
     description:
