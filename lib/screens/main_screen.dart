@@ -5,6 +5,7 @@ import 'package:flutter_dashboard_2/screens/dashboard_screen.dart';
 import 'package:flutter_dashboard_2/screens/entradas_screen.dart';
 import 'package:flutter_dashboard_2/screens/relatorios_screen.dart';
 import 'package:flutter_dashboard_2/screens/saidas_screen.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -15,6 +16,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
+  String _appVersion = '';
 
   // Dados dos itens de navegação centralizados
   static const List<NavigationItem> _navigationItems = [
@@ -57,6 +59,19 @@ class _MainScreenState extends State<MainScreen> {
   ];
 
   NavigationItem get _currentItem => _navigationItems[_selectedIndex];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadAppVersion();
+  }
+
+  Future<void> _loadAppVersion() async {
+    final packageInfo = await PackageInfo.fromPlatform();
+    setState(() {
+      _appVersion = 'v${packageInfo.version}';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -130,14 +145,44 @@ class _MainScreenState extends State<MainScreen> {
               letterSpacing: 0.5,
             ),
           ),
-          const SizedBox(height: 4),
-          Text(
-            'Gestão Financeira',
-            style: TextStyle(
-              fontSize: 14,
-              color: AppColors.textSecondary,
-              fontWeight: FontWeight.w400,
-            ),
+
+          Row(
+            children: [
+              Text(
+                'Gestão Financeira',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: AppColors.textSecondary,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              if (_appVersion.isNotEmpty) ...[
+                const SizedBox(height: 2, width: 16),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 3,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: Colors.white.withValues(alpha: 0.2),
+                      width: 1,
+                    ),
+                  ),
+                  child: Text(
+                    _appVersion,
+                    style: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: 0.3,
+                    ),
+                  ),
+                ),
+              ],
+            ],
           ),
         ],
       ),
