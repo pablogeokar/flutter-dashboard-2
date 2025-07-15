@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:flutter_dashboard_2/components/card_financeiro.dart';
+import 'package:flutter_dashboard_2/widgets/card_financeiro.dart';
 
 class RelatoriosScreen extends StatelessWidget {
   const RelatoriosScreen({super.key});

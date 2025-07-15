@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dashboard_2/widgets/periodo_filter.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:flutter_dashboard_2/components/card_financeiro.dart';
-import 'package:flutter_dashboard_2/components/tabela_movimentacoes.dart';
+import 'package:flutter_dashboard_2/widgets/card_financeiro.dart';
+import 'package:flutter_dashboard_2/widgets/tabela_movimentacoes.dart';
 import 'package:flutter_dashboard_2/screens/relatorios_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -18,39 +19,69 @@ class DashboardScreen extends StatelessWidget {
           const PeriodoFilter(),
           const SizedBox(height: 24),
           // Cards de resumo
-          GridView.count(
-            crossAxisCount: 4,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            crossAxisSpacing: 16,
-            mainAxisSpacing: 16,
-            childAspectRatio: 2,
-            children: const [
-              CardFinanceiro(
-                titulo: 'Saldo Atual',
-                valor: 'R\$ 12.450,00',
-                icone: Icons.account_balance_wallet,
-                cor: Colors.blue,
-              ),
-              CardFinanceiro(
-                titulo: 'Total Entradas',
-                valor: 'R\$ 8.200,00',
-                icone: Icons.arrow_downward,
-                cor: Colors.green,
-              ),
-              CardFinanceiro(
-                titulo: 'Total Saídas',
-                valor: 'R\$ 3.750,00',
-                icone: Icons.arrow_upward,
-                cor: Colors.red,
-              ),
-              CardFinanceiro(
-                titulo: 'Resultado Mês',
-                valor: 'R\$ 4.450,00',
-                icone: Icons.trending_up,
-                cor: Colors.amber,
-              ),
-            ],
+          LayoutBuilder(
+            builder: (context, constraints) {
+              // Calculate responsive grid parameters
+              int crossAxisCount;
+              double childAspectRatio;
+
+              if (constraints.maxWidth > 1400) {
+                // Large screens: 6 columns, more compact cards
+                crossAxisCount = 6;
+                childAspectRatio = 1.8;
+              } else if (constraints.maxWidth > 1200) {
+                // Medium-large screens: 4 columns
+                crossAxisCount = 4;
+                childAspectRatio = 2.2;
+              } else if (constraints.maxWidth > 800) {
+                // Medium screens: 3 columns
+                crossAxisCount = 3;
+                childAspectRatio = 2.5;
+              } else if (constraints.maxWidth > 600) {
+                // Small-medium screens: 2 columns
+                crossAxisCount = 2;
+                childAspectRatio = 2.8;
+              } else {
+                // Small screens: 1 column
+                crossAxisCount = 1;
+                childAspectRatio = 4.0;
+              }
+
+              return GridView.count(
+                crossAxisCount: crossAxisCount,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+                childAspectRatio: childAspectRatio,
+                children: const [
+                  CardFinanceiro(
+                    titulo: 'Saldo Atual',
+                    valor: 'R\$ 12.450,00',
+                    icone: Icons.account_balance_wallet,
+                    cor: Colors.blue,
+                  ),
+                  CardFinanceiro(
+                    titulo: 'Total Entradas',
+                    valor: 'R\$ 8.200,00',
+                    icone: Icons.arrow_downward,
+                    cor: Colors.green,
+                  ),
+                  CardFinanceiro(
+                    titulo: 'Total Saídas',
+                    valor: 'R\$ 3.750,00',
+                    icone: Icons.arrow_upward,
+                    cor: Colors.red,
+                  ),
+                  CardFinanceiro(
+                    titulo: 'Resultado Mês',
+                    valor: 'R\$ 4.450,00',
+                    icone: Icons.trending_up,
+                    cor: Colors.amber,
+                  ),
+                ],
+              );
+            },
           ),
           const SizedBox(height: 24),
           // Gráficos

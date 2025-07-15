@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dashboard_2/screens/main_screen.dart';
+import 'package:flutter_dashboard_2/widgets/main_layout.dart';
 //import 'package:flutter_dashboard_2/screens/dashboard_screen.dart';
 
 void main() {
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
           color: const Color(0xFF2A2A2A),
         ),
       ),
-      home: const MainScreen(),
+      home: const MainLayout(),
     );
   }
 }

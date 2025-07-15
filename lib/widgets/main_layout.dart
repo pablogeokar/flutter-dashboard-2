@@ -7,14 +7,14 @@ import 'package:flutter_dashboard_2/screens/relatorios_screen.dart';
 import 'package:flutter_dashboard_2/screens/saidas_screen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+class MainLayout extends StatefulWidget {
+  const MainLayout({super.key});
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  State<MainLayout> createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _MainScreenState extends State<MainLayout> {
   int _selectedIndex = 0;
   String _appVersion = '';
 
@@ -129,7 +129,7 @@ class _MainScreenState extends State<MainScreen> {
     return Container(
       padding: const EdgeInsets.all(24),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
             padding: const EdgeInsets.all(12),
@@ -147,6 +147,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
 
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 'Gestão Financeira',
