@@ -67,14 +67,6 @@ class _MainScreenState extends State<MainScreen> {
                       // Logo maior
                       Container(
                         padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          //color: const Color(0xFF2A2A2A),
-                          borderRadius: BorderRadius.circular(12),
-                          // border: Border.all(
-                          //   color: Colors.blue.withValues(alpha: 0.3),
-                          //   width: 1,
-                          // ),
-                        ),
                         child: Image.asset(
                           'assets/logo.png',
                           height: 128,
@@ -96,7 +88,7 @@ class _MainScreenState extends State<MainScreen> {
                         'Gestão Financeira',
                         style: TextStyle(
                           fontSize: 14,
-                          color: Colors.grey[400],
+                          color: Colors.grey[700],
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -179,7 +171,7 @@ class _MainScreenState extends State<MainScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Mestre Financeiro',
+                              'Antonio Neto',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,
@@ -187,7 +179,7 @@ class _MainScreenState extends State<MainScreen> {
                               ),
                             ),
                             Text(
-                              'Administrador',
+                              'Tesoureiro',
                               style: TextStyle(
                                 color: Colors.grey,
                                 fontSize: 12,
@@ -231,31 +223,33 @@ class _MainScreenState extends State<MainScreen> {
                               color: Colors.white,
                             ),
                           ),
-                          // const SizedBox(width: 12),
-                          // Container(
-                          //   padding: const EdgeInsets.symmetric(
-                          //     horizontal: 8,
-                          //     vertical: 4,
-                          //   ),
-                          //   decoration: BoxDecoration(
-                          //     color: Colors.blue..withValues(alpha: 0.2),
-                          //     borderRadius: BorderRadius.circular(6),
-                          //   ),
-                          //   child: Text(
-                          //     'Ativo',
-                          //     style: TextStyle(
-                          //       color: Colors.blue[300],
-                          //       fontSize: 12,
-                          //       fontWeight: FontWeight.w500,
-                          //     ),
-                          //   ),
-                          // ),
                         ],
                       ),
 
                       // Ações do header
                       Row(
                         children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Aug∴ e Resp∴ Loja Simb∴ Harmonia, Luz e Sigilo nº 46',
+                                style: TextStyle(
+                                  color: Colors.grey[700],
+                                  fontSize: 14,
+                                ),
+                              ),
+                              Text(
+                                'CNPJ: 12.345.678/0001-90',
+                                style: TextStyle(
+                                  color: Colors.grey[700],
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(width: 16),
+
                           IconButton(
                             icon: const Icon(Icons.search),
                             onPressed: () {},
