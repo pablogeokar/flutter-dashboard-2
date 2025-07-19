@@ -47,10 +47,6 @@ class Membro {
     String? nome,
     String? email,
     String? telefone,
-    String? endereco,
-    String? grau,
-    String? cargo,
-    DateTime? dataIniciacao,
     String? status,
     String? observacoes,
   }) {

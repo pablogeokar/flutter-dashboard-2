@@ -20,8 +20,7 @@ class DB {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nome TEXT NOT NULL,
         email TEXT,
-        telefone TEXT,        
-        grau TEXT NOT NULL,
+        telefone TEXT,
         status TEXT NOT NULL DEFAULT 'ativo',
         observacoes TEXT
       )
