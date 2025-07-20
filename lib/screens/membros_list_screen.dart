@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dashboard_2/models/membro.dart';
 import 'package:flutter_dashboard_2/service/db.dart';
-import 'membros_form_modal.dart';
+import '../widgets/modals/membros_form_modal.dart';
 
 class MembrosListScreen extends StatefulWidget {
   const MembrosListScreen({super.key});
@@ -436,9 +436,9 @@ class _MembrosListScreenState extends State<MembrosListScreen> {
             child: Theme(
               data: Theme.of(context).copyWith(
                 dataTableTheme: DataTableThemeData(
-                  headingRowColor: WidgetStateProperty.all(
-                    const Color(0xFF2A2A2A),
-                  ),
+                  // headingRowColor: WidgetStateProperty.all(
+                  //   const Color(0xFF2A2A2A),
+                  // ),
                   dataRowColor: WidgetStateProperty.resolveWith((states) {
                     if (states.contains(WidgetState.hovered)) {
                       return const Color(0xFF2A2A2A);

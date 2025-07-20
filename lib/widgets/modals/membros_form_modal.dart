@@ -139,41 +139,6 @@ class _MembrosFormModalState extends State<MembrosFormModal> {
     }
   }
 
-  Widget _buildStatusChip(String status) {
-    Color color;
-    IconData icon;
-
-    switch (status.toLowerCase()) {
-      case 'ativo':
-        color = Colors.green;
-        icon = Icons.check_circle;
-        break;
-      case 'inativo':
-        color = Colors.red;
-        icon = Icons.cancel;
-        break;
-      case 'pausado':
-        color = Colors.orange;
-        icon = Icons.pause_circle;
-        break;
-      default:
-        color = Colors.grey;
-        icon = Icons.help;
-    }
-
-    return Chip(
-      avatar: Icon(icon, color: Colors.white, size: 18),
-      label: Text(
-        status.toUpperCase(),
-        style: const TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      backgroundColor: color,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -182,7 +147,7 @@ class _MembrosFormModalState extends State<MembrosFormModal> {
       child: Container(
         width: MediaQuery.of(context).size.width * 0.8,
         height: MediaQuery.of(context).size.height * 0.9,
-        constraints: const BoxConstraints(maxWidth: 700, maxHeight: 800),
+        constraints: const BoxConstraints(maxWidth: 700, maxHeight: 650),
         decoration: BoxDecoration(
           color: Theme.of(context).scaffoldBackgroundColor,
           borderRadius: BorderRadius.circular(16),
@@ -284,17 +249,6 @@ class _MembrosFormModalState extends State<MembrosFormModal> {
                           isRequired: true,
                           onChanged: (value) =>
                               setState(() => _statusSelecionado = value!),
-                        ),
-                        const SizedBox(height: 16),
-                        Row(
-                          children: [
-                            const Text(
-                              'Status atual: ',
-                              style: TextStyle(fontWeight: FontWeight.w500),
-                            ),
-                            const SizedBox(width: 16),
-                            _buildStatusChip(_statusSelecionado),
-                          ],
                         ),
                         const SizedBox(height: 16),
                         CustomTextFormField(
