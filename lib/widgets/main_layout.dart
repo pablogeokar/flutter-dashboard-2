@@ -3,7 +3,7 @@ import 'package:flutter_dashboard_2/screens/cadastros_screen.dart';
 import 'package:flutter_dashboard_2/screens/configuracoes_screen.dart';
 import 'package:flutter_dashboard_2/screens/dashboard_screen.dart';
 import 'package:flutter_dashboard_2/screens/entradas_screen.dart';
-import 'package:flutter_dashboard_2/screens/membros_form_screen.dart';
+import 'package:flutter_dashboard_2/screens/membros_list_screen.dart';
 import 'package:flutter_dashboard_2/screens/relatorios_screen.dart';
 import 'package:flutter_dashboard_2/screens/saidas_screen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -28,7 +28,7 @@ class _MainScreenState extends State<MainLayout> {
       color: Colors.blue,
     ),
     NavigationItem(
-      screen: MembrosFormScreen(),
+      screen: MembrosListScreen(),
       title: 'Membros',
       icon: Icons.people,
       color: Colors.cyanAccent,
