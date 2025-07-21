@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dashboard_2/models/membro.dart';
 import 'package:flutter_dashboard_2/service/db.dart';
 import '../widgets/modals/membros_form_modal.dart';
+import '../widgets/modals/excel_import_modal.dart';
 
 class MembrosListScreen extends StatefulWidget {
   const MembrosListScreen({super.key});
@@ -140,6 +141,19 @@ class _MembrosListScreenState extends State<MembrosListScreen> {
     }
   }
 
+  Future<void> _abrirImportacaoExcel() async {
+    final resultado = await showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const ExcelImportModal(),
+    );
+
+    if (resultado == true) {
+      _carregarMembros();
+      _mostrarMensagem('Lista de membros atualizada!', const Color(0xFF4CAF50));
+    }
+  }
+
   Widget _buildStatusChip(String status) {
     Color color;
     Color backgroundColor;
@@ -247,23 +261,49 @@ class _MembrosListScreenState extends State<MembrosListScreen> {
                   ),
                 ],
               ),
-              ElevatedButton.icon(
-                onPressed: () => _abrirFormulario(),
-                icon: const Icon(Icons.person_add),
-                label: const Text('Novo Membro'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF00BCD4),
-                  foregroundColor: Colors.white,
-                  elevation: 4,
-                  shadowColor: const Color(0xFF00BCD4).withValues(alpha: 0.3),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 16,
+              // MODIFICAÇÃO: Adicionado Row para agrupar os botões
+              Row(
+                children: [
+                  // Novo botão de importação Excel
+                  OutlinedButton.icon(
+                    onPressed: _abrirImportacaoExcel,
+                    icon: const Icon(Icons.upload_file),
+                    label: const Text('Importar Excel'),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: const Color(0xFF4CAF50),
+                      side: const BorderSide(color: Color(0xFF4CAF50)),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 16,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
                   ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                  const SizedBox(width: 16),
+                  // Botão existente de novo membro
+                  ElevatedButton.icon(
+                    onPressed: () => _abrirFormulario(),
+                    icon: const Icon(Icons.person_add),
+                    label: const Text('Novo Membro'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF00BCD4),
+                      foregroundColor: Colors.white,
+                      elevation: 4,
+                      shadowColor: const Color(
+                        0xFF00BCD4,
+                      ).withValues(alpha: 0.3),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 16,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
             ],
           ),
