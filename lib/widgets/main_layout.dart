@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dashboard_2/screens/cadastros_screen.dart';
 import 'package:flutter_dashboard_2/screens/configuracoes_screen.dart';
+import 'package:flutter_dashboard_2/screens/contribuicoes_screen.dart';
 import 'package:flutter_dashboard_2/screens/dashboard_screen.dart';
 import 'package:flutter_dashboard_2/screens/entradas_screen.dart';
 import 'package:flutter_dashboard_2/screens/membros_list_screen.dart';
@@ -32,6 +33,12 @@ class _MainScreenState extends State<MainLayout> {
       title: 'Membros',
       icon: Icons.people,
       color: Colors.cyanAccent,
+    ),
+    NavigationItem(
+      screen: ContribuicoesScreen(),
+      title: 'Contribuições',
+      icon: Icons.monetization_on,
+      color: Colors.lightGreen,
     ),
     NavigationItem(
       screen: EntradasScreen(),
