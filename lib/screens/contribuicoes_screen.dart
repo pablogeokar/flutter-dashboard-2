@@ -393,8 +393,8 @@ class _ContribuicoesScreenState extends State<ContribuicoesScreen> {
                       vertical: 8,
                     ),
                   ),
-                  items: List.generate(5, (index) {
-                    final ano = DateTime.now().year - 2 + index;
+                  items: List.generate(10, (index) {
+                    final ano = DateTime.now().year - 5 + index;
                     return DropdownMenuItem(
                       value: ano,
                       child: Text(ano.toString()),
