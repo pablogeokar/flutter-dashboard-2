@@ -1,7 +1,7 @@
-// screens/contribuicoes_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_dashboard_2/service/db.dart';
 import 'package:flutter_dashboard_2/models/contribuicao.dart';
+import 'package:flutter_dashboard_2/widgets/modals/contribuicao_form_modal.dart';
 
 class ContribuicoesScreen extends StatefulWidget {
   const ContribuicoesScreen({super.key});
@@ -139,6 +139,17 @@ class _ContribuicoesScreenState extends State<ContribuicoesScreen> {
     }
   }
 
+  Future<void> _editarContribuicao(Contribuicao contribuicao) async {
+    final resultado = await showDialog<bool>(
+      context: context,
+      builder: (context) => ContribuicaoFormModal(contribuicao: contribuicao),
+    );
+
+    if (resultado == true) {
+      await _carregarDados();
+    }
+  }
+
   Future<void> _cancelarContribuicao(Contribuicao contribuicao) async {
     final motivo = await _mostrarDialogoObservacoes(
       'Cancelar Contribuição',
@@ -214,7 +225,7 @@ class _ContribuicoesScreenState extends State<ContribuicoesScreen> {
                 hintText: 'Digite aqui...',
                 border: const OutlineInputBorder(),
                 filled: true,
-                fillColor: Colors.grey[50],
+                fillColor: Colors.black54,
               ),
             ),
           ],
@@ -341,7 +352,6 @@ class _ContribuicoesScreenState extends State<ContribuicoesScreen> {
   Widget _buildHeaderSection() {
     return Container(
       padding: const EdgeInsets.all(16),
-      color: Colors.grey[50],
       child: Column(
         children: [
           // Seletor de período
@@ -570,42 +580,55 @@ class _ContribuicoesScreenState extends State<ContribuicoesScreen> {
               ),
           ],
         ),
-        trailing: contribuicao.isPendente
-            ? PopupMenuButton<String>(
-                onSelected: (valor) {
-                  switch (valor) {
-                    case 'pagar':
-                      _marcarComoPago(contribuicao);
-                      break;
-                    case 'cancelar':
-                      _cancelarContribuicao(contribuicao);
-                      break;
-                  }
-                },
-                itemBuilder: (context) => [
-                  const PopupMenuItem(
-                    value: 'pagar',
-                    child: Row(
-                      children: [
-                        Icon(Icons.check, color: Colors.green),
-                        SizedBox(width: 8),
-                        Text('Marcar como Pago'),
-                      ],
-                    ),
-                  ),
-                  const PopupMenuItem(
-                    value: 'cancelar',
-                    child: Row(
-                      children: [
-                        Icon(Icons.close, color: Colors.red),
-                        SizedBox(width: 8),
-                        Text('Cancelar'),
-                      ],
-                    ),
-                  ),
+        trailing: PopupMenuButton<String>(
+          onSelected: (valor) {
+            switch (valor) {
+              case 'editar':
+                _editarContribuicao(contribuicao);
+                break;
+              case 'pagar':
+                _marcarComoPago(contribuicao);
+                break;
+              case 'cancelar':
+                _cancelarContribuicao(contribuicao);
+                break;
+            }
+          },
+          itemBuilder: (context) => [
+            const PopupMenuItem(
+              value: 'editar',
+              child: Row(
+                children: [
+                  Icon(Icons.edit, color: Colors.blue),
+                  SizedBox(width: 8),
+                  Text('Editar'),
                 ],
-              )
-            : null,
+              ),
+            ),
+            if (contribuicao.isPendente) ...[
+              const PopupMenuItem(
+                value: 'pagar',
+                child: Row(
+                  children: [
+                    Icon(Icons.check, color: Colors.green),
+                    SizedBox(width: 8),
+                    Text('Marcar como Pago'),
+                  ],
+                ),
+              ),
+              const PopupMenuItem(
+                value: 'cancelar',
+                child: Row(
+                  children: [
+                    Icon(Icons.close, color: Colors.red),
+                    SizedBox(width: 8),
+                    Text('Cancelar'),
+                  ],
+                ),
+              ),
+            ],
+          ],
+        ),
       ),
     );
   }
