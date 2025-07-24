@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dashboard_2/models/membro.dart';
-import 'package:flutter_dashboard_2/service/db.dart';
+import 'package:flutter_dashboard_2/services/db_service.dart';
 import '../widgets/modals/membros_form_modal.dart';
 import '../widgets/modals/excel_import_modal.dart';
 

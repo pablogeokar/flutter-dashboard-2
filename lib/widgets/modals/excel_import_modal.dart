@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dashboard_2/service/excel_import_service.dart';
+import 'package:flutter_dashboard_2/services/excel_import_service.dart';
 
 class ExcelImportModal extends StatefulWidget {
   const ExcelImportModal({super.key});

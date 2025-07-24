@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dashboard_2/service/db.dart';
+import 'package:flutter_dashboard_2/services/db_service.dart';
 import 'package:flutter_dashboard_2/models/contribuicao.dart';
 import 'package:flutter_dashboard_2/widgets/modals/contribuicao_form_modal.dart';
 

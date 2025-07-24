@@ -1,7 +1,7 @@
 // screens/configuracoes_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dashboard_2/service/db.dart';
+import 'package:flutter_dashboard_2/services/db_service.dart';
 import 'package:flutter_dashboard_2/widgets/custom_text_form_field.dart';
 
 class ConfiguracoesScreen extends StatefulWidget {
