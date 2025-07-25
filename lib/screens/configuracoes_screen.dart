@@ -1,7 +1,7 @@
 // screens/configuracoes_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dashboard_2/services/db_service.dart';
+import 'package:flutter_dashboard_2/services/database_service.dart';
 import 'package:flutter_dashboard_2/widgets/custom_text_form_field.dart';
 
 class ConfiguracoesScreen extends StatefulWidget {
@@ -36,7 +36,7 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> {
     setState(() => _isLoading = true);
 
     try {
-      final db = DB();
+      final db = DatabaseService();
 
       final valorContribuicao = await db.getValorConfiguracao(
         'valor_contribuicao_mensal',
@@ -60,7 +60,7 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> {
     setState(() => _isSaving = true);
 
     try {
-      final db = DB();
+      final db = DatabaseService();
 
       // Salvar valor da contribuição
       await db.updateConfiguracao(

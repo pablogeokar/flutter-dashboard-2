@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:excel/excel.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_dashboard_2/models/membro.dart';
-import 'package:flutter_dashboard_2/services/db_service.dart';
+import 'package:flutter_dashboard_2/services/database_service.dart';
 
 /// Resultado da importação
 class ImportResult {
@@ -29,7 +29,7 @@ class ExcelImportService {
   factory ExcelImportService() => _instance;
   ExcelImportService._internal();
 
-  final DB _db = DB();
+  final DatabaseService _db = DatabaseService();
 
   /// Seleciona e importa arquivo Excel
   Future<ImportResult?> selecionarEImportarArquivo() async {

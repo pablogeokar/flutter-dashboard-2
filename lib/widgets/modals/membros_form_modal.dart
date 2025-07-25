@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dashboard_2/widgets/custom_dropdown_form_field.dart';
 import 'package:flutter_dashboard_2/widgets/custom_text_form_field.dart';
 import 'package:flutter_dashboard_2/models/membro.dart';
-import 'package:flutter_dashboard_2/services/db_service.dart';
+import 'package:flutter_dashboard_2/services/database_service.dart';
 
 class MembrosFormModal extends StatefulWidget {
   final Membro? membro; // Null para novo, com dados para edição
@@ -68,7 +68,7 @@ class _MembrosFormModalState extends State<MembrosFormModal> {
       setState(() => _isLoading = true);
 
       try {
-        final db = DB();
+        final db = DatabaseService();
 
         if (_isEditing) {
           // Editar membro existente

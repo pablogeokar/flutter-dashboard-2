@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dashboard_2/services/db_service.dart';
+import 'package:flutter_dashboard_2/services/database_service.dart';
 import 'package:flutter_dashboard_2/models/contribuicao.dart';
 import 'package:flutter_dashboard_2/widgets/modals/contribuicao_form_modal.dart';
 
@@ -44,7 +44,7 @@ class _ContribuicoesScreenState extends State<ContribuicoesScreen> {
     setState(() => _isLoading = true);
 
     try {
-      final db = DB();
+      final db = DatabaseService();
 
       final contribuicoes = await db.getContribuicoes(
         mesReferencia: _mesReferencia,
@@ -69,7 +69,7 @@ class _ContribuicoesScreenState extends State<ContribuicoesScreen> {
 
   Future<void> _gerarContribuicoes() async {
     // Verificar se já existem contribuições para o período
-    final db = DB();
+    final db = DatabaseService();
     final existem = await db.existemContribuicoesPeriodo(
       _mesReferencia,
       _anoReferencia,
@@ -122,7 +122,7 @@ class _ContribuicoesScreenState extends State<ContribuicoesScreen> {
     if (observacoes == null) return; // Usuário cancelou
 
     try {
-      final db = DB();
+      final db = DatabaseService();
       final sucesso = await db.marcarContribuicaoPaga(
         contribuicao.id!,
         observacoes: observacoes.isEmpty ? null : observacoes,
@@ -160,7 +160,7 @@ class _ContribuicoesScreenState extends State<ContribuicoesScreen> {
     if (motivo == null || motivo.isEmpty) return;
 
     try {
-      final db = DB();
+      final db = DatabaseService();
       final sucesso = await db.cancelarContribuicao(
         contribuicao.id!,
         motivoCancelamento: motivo,

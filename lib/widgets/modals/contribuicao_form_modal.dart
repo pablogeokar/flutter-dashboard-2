@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dashboard_2/widgets/custom_text_form_field.dart';
 import 'package:flutter_dashboard_2/models/contribuicao.dart';
-import 'package:flutter_dashboard_2/services/db_service.dart';
+import 'package:flutter_dashboard_2/services/database_service.dart';
 
 class ContribuicaoFormModal extends StatefulWidget {
   final Contribuicao? contribuicao;
@@ -88,7 +88,7 @@ class _ContribuicaoFormModalState extends State<ContribuicaoFormModal> {
       setState(() => _isLoading = true);
 
       try {
-        final db = DB();
+        final db = DatabaseService();
 
         if (_isEditing) {
           final contribuicaoAtualizada = widget.contribuicao!.copyWith(
