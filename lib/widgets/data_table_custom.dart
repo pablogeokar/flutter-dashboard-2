@@ -120,7 +120,7 @@ class _DataTableCustomState extends State<DataTableCustom> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildTableHeader(),
-          _buildDataTable(context),
+          Expanded(child: _buildDataTable(context)),
           if (widget.enablePagination) _buildPagination(),
         ],
       ),
@@ -503,67 +503,119 @@ class _DataTableCustomState extends State<DataTableCustom> {
     final displayData = _paginatedData;
 
     return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Theme(
-        data: Theme.of(context).copyWith(
-          dataTableTheme: DataTableThemeData(
-            dataRowColor: WidgetStateProperty.resolveWith((states) {
-              if (states.contains(WidgetState.hovered)) {
-                return widget.hoverColor ?? const Color(0xFF2A2A2A);
-              }
-              return widget.backgroundColor ?? const Color(0xFF1A1A1A);
-            }),
-            dividerThickness: 1,
-            headingTextStyle:
-                widget.headerTextStyle ??
-                const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  fontSize: 14,
-                ),
-            dataTextStyle:
-                widget.dataTextStyle ??
-                const TextStyle(color: Colors.white, fontSize: 14),
-          ),
-        ),
-        child: DataTable(
-          columnSpacing: widget.columnSpacing ?? 32,
-          horizontalMargin: widget.horizontalMargin ?? 20,
-          headingRowHeight: widget.headingRowHeight ?? 56,
-          dataRowMinHeight: widget.dataRowMinHeight ?? 60,
-          dataRowMaxHeight: widget.dataRowMaxHeight ?? 60,
-          columns: widget.headers
-              .map((header) => DataColumn(label: Text(header)))
-              .toList(),
-          rows: displayData.map((item) {
-            return DataRow(
-              cells: widget.headers.map((header) {
-                final value =
-                    item[header.toLowerCase().replaceAll(' ', '_')] ??
-                    item[header] ??
-                    'N/A';
-
-                // Se o valor é um Widget, retorna diretamente
-                if (value is Widget) {
-                  return DataCell(value);
+      scrollDirection: Axis.vertical,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Theme(
+          data: Theme.of(context).copyWith(
+            dataTableTheme: DataTableThemeData(
+              dataRowColor: WidgetStateProperty.resolveWith((states) {
+                if (states.contains(WidgetState.hovered)) {
+                  return widget.hoverColor ?? const Color(0xFF2A2A2A);
                 }
-
-                // Se é uma string, cria um Text
-                return DataCell(
-                  Text(
-                    value.toString(),
-                    style: TextStyle(
-                      color: value.toString() == 'N/A'
-                          ? Colors.grey[500]
-                          : Colors.grey[300],
+                return widget.backgroundColor ?? const Color(0xFF1A1A1A);
+              }),
+              dividerThickness: 1,
+              headingTextStyle:
+                  widget.headerTextStyle ??
+                  const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontSize: 14,
+                  ),
+              dataTextStyle:
+                  widget.dataTextStyle ??
+                  const TextStyle(color: Colors.white, fontSize: 14),
+            ),
+          ),
+          child: DataTable(
+            columnSpacing:
+                widget.columnSpacing ?? 16, // Reduzido para economizar espaço
+            horizontalMargin: widget.horizontalMargin ?? 12, // Reduzido
+            headingRowHeight: widget.headingRowHeight ?? 56,
+            dataRowMinHeight: widget.dataRowMinHeight ?? 60,
+            dataRowMaxHeight: widget.dataRowMaxHeight ?? 60,
+            columns: widget.headers
+                .map(
+                  (header) => DataColumn(
+                    label: Expanded(
+                      child: Text(header, overflow: TextOverflow.ellipsis),
                     ),
                   ),
-                );
-              }).toList(),
-            );
-          }).toList(),
+                )
+                .toList(),
+            rows: displayData.map((item) {
+              return DataRow(
+                cells: widget.headers.map((header) {
+                  // Tenta diferentes variações da chave para encontrar o valor
+                  dynamic value;
+
+                  // Lista de possíveis chaves para tentar
+                  final possibleKeys = [
+                    header.toLowerCase(), // "ações"
+                    header.toLowerCase().replaceAll(' ', '_'), // "ações"
+                    header, // "Ações"
+                    header.toLowerCase().replaceAll(' ', '-'), // "ações"
+                    header.replaceAll(' ', '_').toLowerCase(), // "ações"
+                  ];
+
+                  // Tenta encontrar o valor usando as diferentes chaves
+                  for (final key in possibleKeys) {
+                    if (item.containsKey(key)) {
+                      value = item[key];
+                      break;
+                    }
+                  }
+
+                  // Se ainda não encontrou, usa 'N/A'
+                  value ??= 'N/A';
+
+                  // Se o valor é um Widget, retorna diretamente
+                  if (value is Widget) {
+                    return DataCell(
+                      SizedBox(
+                        width: header.toLowerCase() == 'ações'
+                            ? 120
+                            : null, // Largura fixa para ações
+                        child: value,
+                      ),
+                    );
+                  }
+
+                  // Se é uma string, cria um Text
+                  return DataCell(
+                    SizedBox(
+                      width: _getColumnWidth(header),
+                      child: Text(
+                        value.toString(),
+                        style: TextStyle(
+                          color: value.toString() == 'N/A'
+                              ? Colors.grey[500]
+                              : Colors.grey[300],
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  );
+                }).toList(),
+              );
+            }).toList(),
+          ),
         ),
       ),
     );
+  }
+
+  double? _getColumnWidth(String header) {
+    switch (header.toLowerCase()) {
+      case 'ações':
+        return 120;
+      case 'status':
+        return 100;
+      case 'telefone':
+        return 120;
+      default:
+        return null; // Deixa o Flutter decidir
+    }
   }
 }
