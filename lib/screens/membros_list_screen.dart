@@ -28,13 +28,29 @@ class _MembrosListScreenState extends State<MembrosListScreen> {
     'pausado',
   ];
 
-  // Headers da tabela
-  final List<String> _tableHeaders = [
-    'Nome',
-    'E-mail',
-    'Telefone',
-    'Status',
-    'Ações',
+  // Definição das colunas para o novo DataTableCustom
+  List<DataTableColumn> get _tableColumns => [
+    const DataTableColumn(key: 'nome', label: 'Nome', width: 360),
+    const DataTableColumn(key: 'email', label: 'E-mail', width: 200),
+    const DataTableColumn(key: 'telefone', label: 'Telefone', width: 140),
+    DataTableColumn(
+      key: 'status',
+      label: 'Status',
+      width: 110,
+      cellBuilder: (value) => _buildStatusChip(value?.toString() ?? 'N/A'),
+    ),
+    DataTableColumn(
+      key: 'acoes',
+      label: 'Ações',
+      width: 110,
+      cellBuilder: (value) {
+        // O value aqui será o próprio objeto Membro
+        if (value is Membro) {
+          return _buildActionsButtons(value);
+        }
+        return const SizedBox();
+      },
+    ),
   ];
 
   @override
@@ -201,6 +217,7 @@ class _MembrosListScreenState extends State<MembrosListScreen> {
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(icon, color: color, size: 16),
           const SizedBox(width: 6),
@@ -232,6 +249,8 @@ class _MembrosListScreenState extends State<MembrosListScreen> {
             icon: const Icon(Icons.edit, color: Color(0xFF2196F3)),
             tooltip: 'Editar',
             iconSize: 20,
+            constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
+            padding: EdgeInsets.zero,
           ),
         ),
         const SizedBox(width: 8),
@@ -245,39 +264,23 @@ class _MembrosListScreenState extends State<MembrosListScreen> {
             icon: const Icon(Icons.delete, color: Color(0xFFE53E3E)),
             tooltip: 'Excluir',
             iconSize: 20,
+            constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
+            padding: EdgeInsets.zero,
           ),
         ),
       ],
     );
   }
 
-  // Método para converter os membros em dados para a tabela
+  // Método para converter os membros em dados para a nova tabela
   List<Map<String, dynamic>> _prepararDadosTabela() {
     return _membrosFiltrados.map((membro) {
       return {
-        'nome': Text(
-          membro.nome,
-          style: const TextStyle(
-            fontWeight: FontWeight.w600,
-            color: Colors.white,
-          ),
-        ),
-        'e-mail': Text(
-          membro.email ?? 'N/A',
-          style: TextStyle(
-            color: membro.email != null ? Colors.grey[300] : Colors.grey[500],
-          ),
-        ),
-        'telefone': Text(
-          membro.telefone ?? 'N/A',
-          style: TextStyle(
-            color: membro.telefone != null
-                ? Colors.grey[300]
-                : Colors.grey[500],
-          ),
-        ),
-        'status': _buildStatusChip(membro.status),
-        'ações': _buildActionsButtons(membro),
+        'nome': membro.nome,
+        'email': membro.email ?? 'N/A',
+        'telefone': membro.telefone ?? 'N/A',
+        'status': membro.status,
+        'acoes': membro, // Passamos o objeto inteiro para usar no cellBuilder
       };
     }).toList();
   }
@@ -286,8 +289,8 @@ class _MembrosListScreenState extends State<MembrosListScreen> {
     return Container(
       padding: const EdgeInsets.all(24.0),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [const Color(0xFF1A1A1A), const Color(0xFF2A2A2A)],
+        gradient: const LinearGradient(
+          colors: [Color(0xFF1A1A1A), Color(0xFF2A2A2A)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -309,11 +312,7 @@ class _MembrosListScreenState extends State<MembrosListScreen> {
             children: [
               Row(
                 children: [
-                  IconStyled(
-                    icone: Icons.people,
-                    isLarge: true,
-                    isBordered: true,
-                  ),
+                  IconStyled(icone: Icons.people, isLarge: true),
                   const SizedBox(width: 16),
                   const Text(
                     'Gerenciamento de Irmãos',
@@ -487,15 +486,21 @@ class _MembrosListScreenState extends State<MembrosListScreen> {
                       ),
                     )
                   : DataTableCustom(
-                      headers: _tableHeaders,
+                      columns: _tableColumns,
                       data: _prepararDadosTabela(),
                       totalLabel: 'Total: ${_membrosFiltrados.length} membros',
+                      leadingIcon: const Icon(
+                        Icons.view_list,
+                        color: Color(0xFF00BCD4),
+                      ),
                       emptyMessage:
                           'Nenhum membro foi encontrado.\nTente ajustar os filtros ou adicionar novos membros.',
-                      // Ativando paginação
+                      // Configurações de paginação
                       enablePagination: true,
-                      itemsPerPage: 5,
-                      itemsPerPageOptions: [5, 10, 20, 50],
+                      itemsPerPage: 10,
+                      itemsPerPageOptions: const [5, 10, 20, 50],
+                      // Configurações de responsividade
+                      enableHorizontalScroll: true,
                     ),
             ),
           ],

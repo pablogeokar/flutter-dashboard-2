@@ -32,7 +32,7 @@ class _MainScreenState extends State<MainLayout> {
       screen: MembrosListScreen(),
       title: 'Membros',
       icon: Icons.people,
-      color: Colors.cyanAccent,
+      color: Color(0xFF00BCD4),
     ),
     NavigationItem(
       screen: ContribuicoesScreen(),
