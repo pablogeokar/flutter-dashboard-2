@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dashboard_2/models/membro.dart';
 import 'package:flutter_dashboard_2/services/database_service.dart';
+import 'package:flutter_dashboard_2/widgets/icon_styled.dart';
 import '../widgets/modals/membros_form_modal.dart';
 import '../widgets/modals/excel_import_modal.dart';
 
@@ -234,20 +235,10 @@ class _MembrosListScreenState extends State<MembrosListScreen> {
             children: [
               Row(
                 children: [
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF00BCD4).withValues(alpha: 0.15),
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: const Color(0xFF00BCD4).withValues(alpha: 0.3),
-                      ),
-                    ),
-                    child: const Icon(
-                      Icons.people,
-                      color: Color(0xFF00BCD4),
-                      size: 32,
-                    ),
+                  IconStyled(
+                    icone: Icons.people,
+                    isLarge: true,
+                    isBordered: true,
                   ),
                   const SizedBox(width: 16),
                   const Text(
@@ -436,18 +427,7 @@ class _MembrosListScreenState extends State<MembrosListScreen> {
               children: [
                 Row(
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF00BCD4).withValues(alpha: 0.15),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: const Icon(
-                        Icons.table_chart,
-                        color: Color(0xFF00BCD4),
-                        size: 20,
-                      ),
-                    ),
+                    IconStyled(icone: Icons.table_chart),
                     const SizedBox(width: 12),
                     Text(
                       'Total: ${_membrosFiltrados.length} membros',
